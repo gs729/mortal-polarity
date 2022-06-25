@@ -10,10 +10,10 @@ class Commands(Base):
     __mapper_args__ = {"eager_defaults": True}
     name = Column("name", String, primary_key=True)
     description = Column("description", String)
-    text = Column("text", String)
+    response = Column("response", String)
 
-    def __init__(self, name, description, text):
+    def __init__(self, name, description, response):
         super().__init__()
         self.name = name
         self.description = description
-        self.text = text
+        self.response = response
