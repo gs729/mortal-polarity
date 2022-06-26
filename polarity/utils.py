@@ -27,6 +27,7 @@ class RefreshCmdListEvent(hikari.Event):
         self.bot = bot
         self.sync = sync
 
+    @property
     def app(self):
         return self.bot
 
