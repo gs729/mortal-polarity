@@ -8,19 +8,17 @@ license = "Creative Commons Attribution-NonCommercial-NoDerivs 2.0 Generic Licen
 [tool.poetry.dependencies]
 python = "~3.10.5"
 postgres = "*"
-psycopg2-binary = "*"
-psycopg2-pool = "*"
-asyncpg = "*"
 aiofiles = "*"
-alembic = "*"
-SQLAlchemy = "^1.4.35"
 hikari = { extras = ["speedups"], version = "^2.0.0-alpha.109" }
+tortoise-orm = { extras = ["asyncpg"], version = "^0.19.0" }
 hikari-lightbulb = "^2.2.2"
 uvloop = "^0.16.0"
 sector_accounting = { git = "https://github.com/gs729/sector_accounting.git", rev = "b6059f4" }
 requests = "^2.28.0"
 APScheduler = "^3.9.1"
 aiohttp = "^3.8.1"
+ciso8601 = "^2.2.0"
+aerich = "^0.6.3"
 
 [tool.poetry.dev-dependencies]
 pyflakes = "*"

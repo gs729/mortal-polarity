@@ -3,10 +3,11 @@ import logging
 import hikari
 import lightbulb
 from aiohttp import web
-from sqlalchemy import Boolean, Integer
-from sqlalchemy.sql.schema import Column
 from . import cfg
-from .utils import Base as db_base_class
+from tortoise.models import Model
+from tortoise import fields
+from six import with_metaclass
+
 
 app = web.Application()
 
@@ -67,25 +68,26 @@ class WeeklyResetSignal(ResetSignal):
     qualifier = "weekly"
 
 
-class LostSectorSignal(BaseCustomEvent, db_base_class):
+class LostSectorPostSettings(Model):
     __tablename__ = "lostsectorsignal"
     __mapper_args__ = {"eager_defaults": True}
-    name = Column("id", Integer, primary_key=True)
-    description = Column(
-        "autoannounce_enabled", Boolean, default=True, server_default="t"
-    )
+    id = fields.IntField(pk=True)
+    autoannounce_enabled = fields.BooleanField(default=True)
 
-    def __init__(
-        self, bot: lightbulb.BotApp, id: int = 0, autoannounce_enabled: bool = True
-    ) -> None:
+
+class LostSectorSignal(BaseCustomEvent):
+    def __init__(self, bot: lightbulb.BotApp) -> None:
         super().__init__()
         self.id = id
-        # Need to create or get this
-        self.autoannounce_enabled = autoannounce_enabled
         self.bot = bot
 
-    def conditional_daily_reset_repeater(self, event: DailyResetSignal) -> None:
-        if self.autoannounce_enabled:
+    async def arm(self) -> None:
+        self.bot.event_manager.add_listener(
+            self.conditional_daily_reset_repeater, DailyResetSignal
+        )
+
+    async def conditional_daily_reset_repeater(self, event: DailyResetSignal) -> None:
+        if await LostSectorPostSettings.get_or_create(id=0).autoannounce_enabled:
             event.bot.dispatch(self)
 
 
@@ -112,6 +114,7 @@ async def arm(bot: lightbulb.BotApp) -> None:
     # Arm all signals
     DailyResetSignal(bot).arm()
     WeeklyResetSignal(bot).arm()
+    LostSectorSignal(bot).arm()
     # Connect listeners to the bot
     _wire_listeners(bot)
     # Start the web server for periodic signals from apscheduler

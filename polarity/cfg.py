@@ -1,5 +1,4 @@
 from os import getenv as _getenv
-from sqlalchemy.ext.asyncio import AsyncSession
 
 # Discord API Token
 main_token = _getenv("MAIN_TOKEN")
@@ -12,11 +11,9 @@ db_url = _getenv("DATABASE_URL")
 if db_url.startswith("postgres"):
     repl_till = db_url.find("://")
     db_url = db_url[repl_till:]
-    db_url_async = "postgresql+asyncpg" + db_url
-    db_url = "postgresql" + db_url
+    db_url_async = "postgres+asyncpg" + db_url
+    db_url = "postgres" + db_url
 
-# Async SQLAlchemy DB Session KWArg Parameters
-db_session_kwargs = {"expire_on_commit": False, "class_": AsyncSession}
 
 test_env = _getenv("TEST_ENV") or "false"
 test_env = int(test_env) if test_env != "false" else False

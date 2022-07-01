@@ -1,15 +1,12 @@
 import re
 
 import hikari
-from sqlalchemy.ext.asyncio import create_async_engine
-from sqlalchemy.orm import declarative_base, sessionmaker
+from tortoise import Tortoise
+
 
 from . import cfg
 
-Base = declarative_base()
-db_engine = create_async_engine(cfg.db_url_async)
-db_session = sessionmaker(db_engine, **cfg.db_session_kwargs)
-
+_DB_INITIALISED = False
 
 url_regex = re.compile(
     "http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+"
@@ -29,3 +26,11 @@ class RefreshCmdListEvent(hikari.Event):
 
     def dispatch(self):
         self.bot.event_manager.dispatch(self)
+
+
+async def init_db_session():
+    """Coroutine that initialises a db session if one has not been initialised already"""
+    await Tortoise.init(
+        db_url=cfg.db_url,
+        modules={"models": ["polarity.user_commands", "polarity.autoannounce"]},
+    )

@@ -4,10 +4,15 @@ import lightbulb
 import uvloop
 
 from . import cfg, user_commands
-from .autoannounce import arm
+
+# from .autoannounce import arm
 
 uvloop.install()
 bot: lightbulb.BotApp = lightbulb.BotApp(**cfg.lightbulb_params)
+
+
+async def arm(*args):
+    pass
 
 
 @bot.listen(hikari.StartedEvent)
