@@ -4,6 +4,7 @@ import lightbulb
 import uvloop
 
 from . import cfg, user_commands
+from .utils import Base
 from .autoannounce import arm
 
 uvloop.install()
