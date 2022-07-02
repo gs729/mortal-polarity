@@ -17,7 +17,6 @@ from . import cfg
 from .utils import (
     Base,
     RefreshCmdListEvent,
-    db_command_to_lb_user_command,
     db_session,
     url_regex,
 )
