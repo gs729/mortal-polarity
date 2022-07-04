@@ -3,7 +3,7 @@ import hikari
 import lightbulb
 import uvloop
 
-from . import cfg, user_commands, debug_commands
+from . import cfg, user_commands, debug_commands, controller
 from .utils import Base
 from .autoannounce import arm
 
@@ -18,6 +18,7 @@ async def on_ready(event: hikari.StartedEvent) -> None:
 
 if __name__ == "__main__":
     user_commands.register_all(bot)
+    controller.register_all(bot)
     if cfg.test_env:
         debug_commands.register_all(bot)
     bot.run()
