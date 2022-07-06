@@ -1,11 +1,10 @@
-import asyncio
 import hikari
 import lightbulb
 import uvloop
 
-from . import cfg, user_commands, debug_commands, controller
-from .utils import Base
+from . import cfg, controller, debug_commands, user_commands
 from .autoannounce import arm
+from .utils import Base
 
 uvloop.install()
 bot: lightbulb.BotApp = lightbulb.BotApp(**cfg.lightbulb_params)

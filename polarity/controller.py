@@ -1,11 +1,4 @@
-import aiohttp
-import hikari
 import lightbulb
-from pytz import utc
-from sector_accounting import Rotation
-from sqlalchemy.sql.expression import select
-from sqlalchemy.sql.schema import Column
-from sqlalchemy.sql.sqltypes import String
 
 from polarity.autoannounce import LostSectorPostSettings
 

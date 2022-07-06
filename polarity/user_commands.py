@@ -14,12 +14,7 @@ from sqlalchemy.sql.schema import Column
 from sqlalchemy.sql.sqltypes import String
 
 from . import cfg
-from .utils import (
-    Base,
-    RefreshCmdListEvent,
-    db_session,
-    url_regex,
-)
+from .utils import Base, RefreshCmdListEvent, db_session, url_regex
 
 command_registry = {}
 
