@@ -1,5 +1,6 @@
 from os import getenv as _getenv
 
+import hikari
 from sqlalchemy.ext.asyncio import AsyncSession
 
 # Discord API Token
@@ -49,3 +50,5 @@ gsheets_credentials = {
 sheets_ls_url = _getenv("SHEETS_LS_URL")
 
 port = int(_getenv("PORT") or 5000)
+
+kyber_pink = hikari.Color(0xEC42A5)
