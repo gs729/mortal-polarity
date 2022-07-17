@@ -1,3 +1,4 @@
+import abc
 from os import getenv as _getenv
 
 import hikari
@@ -57,3 +58,9 @@ sheets_ls_url = _getenv("SHEETS_LS_URL")
 port = int(_getenv("PORT") or 5000)
 
 kyber_pink = hikari.Color(0xEC42A5)
+
+
+class defaults(abc.ABC):
+    class xur(abc.ABC):
+        gfx_url = "https://kyber3000.com/Xur"
+        post_url = "https://kyber3000.com/Xurpost"
