@@ -243,14 +243,6 @@ async def autopost_cmd_group(ctx: lightbulb.Context) -> None:
     )
 
 
-lost_sector_auto = LostSectorAutopostChannel.make_autopost_ctrl_usr_cmd(
-    autopost_cmd_group
-)
-
-
-xur_auto = XurAutopostChannel.make_autopost_ctrl_usr_cmd(autopost_cmd_group)
-
-
 @autopost_cmd_group.set_error_handler
 async def announcements_error_handler(
     event: lightbulb.MissingRequiredPermission,
@@ -275,6 +267,8 @@ async def arm(bot: lightbulb.BotApp) -> None:
     WeekendResetSignal(bot).arm()
     LostSectorSignal(bot).arm()
     XurSignal(bot).arm()
+    XurAutopostChannel.register_command(autopost_cmd_group)
+    LostSectorAutopostChannel.register_command(autopost_cmd_group)
     # Connect listeners to the bot
     _wire_listeners(bot)
     # Connect commands
