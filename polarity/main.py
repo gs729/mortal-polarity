@@ -7,7 +7,7 @@ from . import cfg, controller, debug_commands, user_commands
 from .autoannounce import arm
 
 # Note: Alembic's env.py is set up to import Base from polarity.main
-from .schemas import Base
+from .utils import Base
 
 uvloop.install()
 bot: lightbulb.BotApp = lightbulb.BotApp(**cfg.lightbulb_params)
